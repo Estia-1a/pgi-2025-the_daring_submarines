@@ -29,7 +29,7 @@ void dimension(char *chemin) {
     
     free(donnees);
 }
-
+/* debut zone fisrt_pixel */
 void first_pixel() {
     int read_image_data(const char *filename, unsigned char **data, int *width, int *height, int *channel_count);
     if ( strncmp( read_image_data, "first_pixel", 11 ) == 0 ) {/* first_pixel() function is defined in feature.h and implemented in feature.c */
@@ -37,4 +37,60 @@ void first_pixel() {
     printf("first_pixel :")first_pixel();
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* fin zone fisrt_pixel */
+
+
+/* debut zone Color of the 10th pixel #5 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* fin zone  Color of the 10th pixel #5 */
+
 }
