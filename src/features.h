@@ -6,4 +6,6 @@ void helloWorld();
 
 void dimension(char *chemin);
 
+void first_pixel();
+
 #endif

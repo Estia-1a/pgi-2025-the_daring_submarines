@@ -1,7 +1,7 @@
 #include <estia-image.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include "features.h"
 #include "utils.h"
 
@@ -28,4 +28,12 @@ void dimension(char *chemin) {
     printf("dimension: %d, %d\n", largeur, hauteur);
     
     free(donnees);
+}
+
+void first_pixel() {
+    int read_image_data(const char *filename, unsigned char **data, int *width, int *height, int *channel_count);
+    if ( strncmp( configuration.command, "first_pixel", 11 ) == 0 ) {/* first_pixel() function is defined in feature.h and implemented in feature.c */
+    
+    first_pixel();
+}
 }
