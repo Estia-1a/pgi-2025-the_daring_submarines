@@ -4,4 +4,6 @@
 
 void helloWorld();
 
+void dimension(char *chemin);
+
 #endif
