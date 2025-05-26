@@ -17,6 +17,7 @@ void helloWorld()
     printf("Hello World !");
 }
 
+/* feature 1 dimension */
 void dimension(char *chemin)
 {
     unsigned char *donnees;
@@ -28,27 +29,31 @@ void dimension(char *chemin)
 
     printf("dimension: %d, %d\n", largeur, hauteur);
 }
+
 /* feature 2 fisrt_pixel */
-void first_pixel()
+void first_pixel(char *source_path)
 {
-    int read_image_data(const char *filename, unsigned char **data, int *width, int *height, int *channel_count);
+    typedef struct _pixelRGB {
+        unsigned char R ;
+        unsigned char G ;
+        unsigned char B ;
+    } pixelRGB ;
     
+    read_image_data(source_path, &_pixelRGB, &R, &G, &B);  
+    printf("first_pixel: R, G, B\n");
 }
-
-/* feature 3 tenth_pixel */
-
+/*
+ feature 3 tenth_pixel 
 void tenth_pixel(char *source_path)
 {
 }
 
-/* feature 4 second_line */
-
-second_line(char *source_path);
+ feature 4 second_line 
+void second_line(char *source_path)
 {
 }
 
-/* feature 5 print_pixel */
-
-void print_pixel( char *filename, int x, int y );
+ feature 5 print_pixel 
+void print_pixel( char *filename, int x, int y )
 {
-}
+}*/
