@@ -83,7 +83,18 @@ void second_line(char *source_path)
 }
 
 /*feature 5 print_pixel*/
-void print_pixel( char *filename, int x, int y )
+void print_pixel( char *source_path, int x, int y )
 {
+    unsigned char *donnees;
+    int largeur;
+    int hauteur;
+    int nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
     
+    unsigned char R = donnees[(largeur*y+x)*nb_canaux];
+    unsigned char G = donnees[(largeur*y+x)*nb_canaux+1];
+    unsigned char B = donnees[(largeur*y+x)*nb_canaux+2];
+
+    printf("print_pixel: %d, %d, %d\n", R, G, B);
 }

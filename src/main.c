@@ -52,5 +52,9 @@ int main(int argc, char **argv) {
     second_line(configuration.filenames[0]);
   }
 
+  if ( strncmp( configuration.command, "print_pixel", 11 ) == 0 ) {
+    print_pixel(configuration.filenames[0], atoi(configuration.arguments[0]), atoi(configuration.arguments[1]));
+  }
+
   return 0;
 }
