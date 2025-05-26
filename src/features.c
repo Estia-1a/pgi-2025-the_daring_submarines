@@ -33,14 +33,20 @@ void dimension(char *chemin)
 /* feature 2 fisrt_pixel */
 void first_pixel(char *source_path)
 {
-    typedef struct _pixelRGB {
-        unsigned char R ;
-        unsigned char G ;
-        unsigned char B ;
-    } pixelRGB ;
+
+    unsigned char *donnees;
+    int largeur;
+    int hauteur;
+    int nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
     
-    read_image_data(source_path, &_pixelRGB, &R, &G, &B);  
-    printf("first_pixel: R, G, B\n");
+    unsigned char R = donnees[0];
+    unsigned char G = donnees[1];
+    unsigned char B = donnees[2];
+   
+
+    printf("first_pixel: %d, %d, %d\n", R, G, B);
 }
 /*
  feature 3 tenth_pixel 
