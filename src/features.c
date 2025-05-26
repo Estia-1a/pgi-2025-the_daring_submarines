@@ -27,7 +27,6 @@ void dimension(char *chemin) {
     
     printf("dimension: %d, %d\n", largeur, hauteur);
     
-    free(donnees);
 }
 /* debut zone fisrt_pixel */
 void first_pixel() {
