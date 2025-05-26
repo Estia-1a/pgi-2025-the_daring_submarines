@@ -44,22 +44,33 @@ void first_pixel(char *source_path)
     unsigned char R = donnees[0];
     unsigned char G = donnees[1];
     unsigned char B = donnees[2];
-   
 
     printf("first_pixel: %d, %d, %d\n", R, G, B);
 }
-/*
- feature 3 tenth_pixel 
+
+/*feature 3 tenth_pixel */ 
 void tenth_pixel(char *source_path)
 {
+    unsigned char *donnees;
+    int largeur;
+    int hauteur;
+    int nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+    
+    unsigned char R = donnees[27];
+    unsigned char G = donnees[28];
+    unsigned char B = donnees[29];
+
+    printf("tenth_pixel: %d, %d, %d\n", R, G, B);
 }
 
- feature 4 second_line 
+/*feature 4 second_line*/
 void second_line(char *source_path)
 {
 }
 
- feature 5 print_pixel 
+/*feature 5 print_pixel
 void print_pixel( char *filename, int x, int y )
 {
 }*/
