@@ -32,12 +32,7 @@ void dimension(char *chemin)
 void first_pixel()
 {
     int read_image_data(const char *filename, unsigned char **data, int *width, int *height, int *channel_count);
-    if (strncmp(read_image_data, "first_pixel", 11) == 0)
-    { /* first_pixel() function is defined in feature.h and implemented in feature.c */
-
-        printf("first_pixel :");
-        first_pixel();
-    }
+    
 }
 
 /* feature 3 tenth_pixel */
