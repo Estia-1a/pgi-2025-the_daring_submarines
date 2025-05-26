@@ -68,9 +68,22 @@ void tenth_pixel(char *source_path)
 /*feature 4 second_line*/
 void second_line(char *source_path)
 {
+    unsigned char *donnees;
+    int largeur;
+    int hauteur;
+    int nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+    
+    unsigned char R = donnees[(largeur*nb_canaux)];
+    unsigned char G = donnees[(largeur*nb_canaux)+1];
+    unsigned char B = donnees[(largeur*nb_canaux)+2];
+
+    printf("second_line: %d, %d, %d\n", R, G, B);
 }
 
-/*feature 5 print_pixel
+/*feature 5 print_pixel*/
 void print_pixel( char *filename, int x, int y )
 {
-}*/
+    
+}
