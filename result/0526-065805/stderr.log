@@ -1,0 +1,20 @@
+/home/runner/work/pgi-2025-the_daring_submarines/pgi-2025-the_daring_submarines/src/features.c: In function ‘first_pixel’:
+/home/runner/work/pgi-2025-the_daring_submarines/pgi-2025-the_daring_submarines/src/features.c:35:19: warning: passing argument 1 of ‘strncmp’ from incompatible pointer type [-Wincompatible-pointer-types]
+   35 |     if ( strncmp( read_image_data, "first_pixel", 11 ) == 0 ) {/* first_pixel() function is defined in feature.h and implemented in feature.c */
+      |                   ^~~~~~~~~~~~~~~
+      |                   |
+      |                   int (*)(const char *, unsigned char **, int *, int *, int *)
+In file included from /home/runner/work/pgi-2025-the_daring_submarines/pgi-2025-the_daring_submarines/src/features.c:4:
+/usr/include/string.h:159:33: note: expected ‘const char *’ but argument is of type ‘int (*)(const char *, unsigned char **, int *, int *, int *)’
+  159 | extern int strncmp (const char *__s1, const char *__s2, size_t __n)
+      |                     ~~~~~~~~~~~~^~~~
+/home/runner/work/pgi-2025-the_daring_submarines/pgi-2025-the_daring_submarines/src/features.c:37:28: error: expected ‘;’ before ‘first_pixel’
+   37 |     printf("first_pixel :")first_pixel();
+      |                            ^~~~~~~~~~~
+      |                            ;
+gmake[2]: *** [CMakeFiles/freud.dir/build.make:93: CMakeFiles/freud.dir/src/features.c.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:87: CMakeFiles/freud.dir/all] Error 2
+gmake: *** [Makefile:136: all] Error 2
+
+The process '/usr/local/bin/cmake' failed with exit code 2
