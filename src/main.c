@@ -114,5 +114,9 @@ int main(int argc, char **argv) {
     color_desaturate(configuration.filenames[0]);
   }
 
+  if (strncmp(configuration.command, "rotate_cw", 9) == 0) {
+    rotate_cw(configuration.filenames[0]);
+  }
+
   return 0;
 }
