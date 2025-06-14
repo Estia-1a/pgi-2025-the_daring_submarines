@@ -336,3 +336,35 @@ void color_red (char *source_path)
     }
     write_image_data("image_out.bmp", donnees, largeur, hauteur);
 }
+
+/*feature 12 color_green*/
+void color_green (char *source_path)
+{
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int taille = largeur * hauteur * nb_canaux;
+    for (int i = 0; i < taille; i += nb_canaux){
+        donnees [i] = 0;
+        donnees [i + 2] = 0;
+    }
+    write_image_data("image_out.bmp", donnees, largeur, hauteur);
+}
+
+/*feature 13 color_blue*/
+void color_blue (char *source_path)
+{
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int taille = largeur * hauteur * nb_canaux;
+    for (int i = 0; i < taille; i += nb_canaux){
+        donnees [i + 1] = 0;
+        donnees [i] = 0;
+    }
+    write_image_data("image_out.bmp", donnees, largeur, hauteur);
+}
