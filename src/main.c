@@ -64,5 +64,14 @@ int main(int argc, char **argv) {
     min_pixel(configuration.filenames[0]);
   }
 
+  if (strncmp(configuration.command, "max_component", 13) == 0) {
+    if (configuration.arguments[0] != NULL) {
+        char composante = configuration.arguments[0][0]; 
+        max_component(configuration.filenames[0], composante);
+    } else {
+        printf("Erreur : veuillez spécifier R, G ou B pour max_component\n");
+    }
+}
+
   return 0;
 }
