@@ -412,3 +412,26 @@ void color_invert (char *source_path)
     }
     write_image_data("image_out.bmp", donnees, largeur, hauteur);
 }
+
+/*feature 16 color_gray_luminance*/
+void color_gray_luminance (char *source_path)
+{
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int taille = largeur * hauteur * nb_canaux;
+    for (int i = 0; i < taille; i += nb_canaux){
+        unsigned char R = donnees [i];
+        unsigned char G = donnees [i + 1];
+        unsigned char B = donnees [i + 2];
+
+        unsigned char gris = (R * 0.21 + G * 0.72 + B * 0.07);
+
+        donnees [i] = gris;
+        donnees [i + 1] = gris;
+        donnees [i + 2] = gris;
+    }
+    write_image_data("image_out.bmp", donnees, largeur, hauteur);
+}
