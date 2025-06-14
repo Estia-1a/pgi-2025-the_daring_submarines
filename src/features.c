@@ -435,3 +435,34 @@ void color_gray_luminance (char *source_path)
     }
     write_image_data("image_out.bmp", donnees, largeur, hauteur);
 }
+
+/*feature 17 color_desaturate*/
+void color_desaturate(char *source_path) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int taille = largeur * hauteur * nb_canaux;
+
+    for (int i = 0; i < taille; i += nb_canaux) {
+        unsigned char R = donnees[i];
+        unsigned char G = donnees[i + 1];
+        unsigned char B = donnees[i + 2];
+
+        unsigned char min_val = R;
+        if (G < min_val) min_val = G;
+        if (B < min_val) min_val = B;
+
+        unsigned char max_val = R;
+        if (G > max_val) max_val = G;
+        if (B > max_val) max_val = B;
+
+        unsigned char new_val = (min_val + max_val) / 2;
+
+        donnees[i]     = new_val; 
+        donnees[i + 1] = new_val; 
+        donnees[i + 2] = new_val; 
+    }
+    write_image_data("image_out.bmp", donnees, largeur, hauteur);
+}
