@@ -97,7 +97,7 @@ void print_pixel(char *source_path, int x, int y)
     if (pixel == NULL) {
         printf("Erreur : coordonnées (%d, %d) hors limites\n", x, y);
     } else {
-        printf("Print Pixel (%d,%d): %d, %d, %d\n", x, y, pixel->R, pixel->G, pixel->B);
+        printf("print_pixel (%d,%d): %d, %d, %d\n", x, y, pixel->R, pixel->G, pixel->B);
         free(pixel);
     }
 }
@@ -138,5 +138,44 @@ void max_pixel(char *source_path)
     if (max_pixel != NULL) {
         printf("max_pixel (%d, %d): %d, %d, %d\n", max_x, max_y, max_pixel->R, max_pixel->G, max_pixel->B);
         free(max_pixel);
+    }
+}
+
+/*feature 6 min_pixel*/
+
+void min_pixel(char *source_path) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int min_somme = 256 * 3 + 1; // Max possible + 1
+    int min_x = 0;
+    int min_y = 0;
+    pixelRGB *min_pixel = NULL;
+
+    for (int y = 0; y < hauteur; y++) {
+        for (int x = 0; x < largeur; x++) {
+            pixelRGB *pixel = get_pixel(donnees, largeur, hauteur, nb_canaux, x, y);
+            if (pixel == NULL) continue;
+
+            int somme = pixel->R + pixel->G + pixel->B;
+            if (somme < min_somme) {
+                min_somme = somme;
+                min_x = x;
+                min_y = y;
+
+                if (min_pixel == NULL) {
+                    min_pixel = malloc(sizeof(pixelRGB));
+                }
+                *min_pixel = *pixel;
+            }
+
+            free(pixel);
+        }
+    }
+
+    if (min_pixel != NULL) {
+        printf("min_pixel (%d, %d): %d, %d, %d\n", min_x, min_y, min_pixel->R, min_pixel->G, min_pixel->B);
+        free(min_pixel);
     }
 }
