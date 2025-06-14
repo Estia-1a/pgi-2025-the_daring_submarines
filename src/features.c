@@ -600,3 +600,5 @@ void mirror_total (char *source_path) {
     write_image_data("image_out.bmp", nouvelle_image, largeur, hauteur);
     free(nouvelle_image);
 }
+
+/*feature 23 scale_crop*/

@@ -134,5 +134,9 @@ int main(int argc, char **argv) {
     mirror_total(configuration.filenames[0]);
   }
 
+  if (strncmp(configuration.command, "scale_crop", 10) == 0) {
+    scale_crop(configuration.filenames[0]);
+  }
+
   return 0;
 }
