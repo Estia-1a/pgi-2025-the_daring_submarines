@@ -497,3 +497,34 @@ void rotate_cw (char *source_path) {
     write_image_data("image_out.bmp", nouvelle_image, new_largeur, new_hauteur);
     free(nouvelle_image);
 }
+
+/*feature 19 rotate_acw*/
+void rotate_acw (char *source_path) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int new_largeur = hauteur;
+    int new_hauteur = largeur;
+
+    int taille = hauteur * largeur * nb_canaux;
+    unsigned char *nouvelle_image = malloc (taille);
+
+    for (int y = 0; y < hauteur; y++){
+        for (int x = 0; x < largeur; x++){
+            int src_index = (y * largeur + x) * nb_canaux;
+
+            int x_new = y;
+            int y_new = hauteur - 1 - x;
+
+            int dest_index = (y_new * new_largeur + x_new) * nb_canaux;
+
+            for (int c = 0; c < nb_canaux; c++){
+                nouvelle_image[dest_index + c] = donnees[src_index + c];
+            }
+        }
+    }
+    write_image_data("image_out.bmp", nouvelle_image, new_largeur, new_hauteur);
+    free(nouvelle_image);
+}
