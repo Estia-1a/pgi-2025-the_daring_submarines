@@ -242,3 +242,97 @@ void min_component(char *source_path, char composante)
     }
     printf("min_component %c (%d, %d): %d\n", composante, min_x, min_y, min_val);
 }
+
+/*feature 10 stat_report*/
+void stat_report(char *source_path) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    FILE *fichier = fopen("stat_report.txt", "w");
+    if (fichier == NULL) {
+        printf("Erreur : impossible de créer stat_report.txt\n");
+        return;
+    }
+
+    /*max_pixel/min_pixel*/
+    int max_somme = -1, min_somme = 256*3+1;
+    int max_x = 0, max_y = 0, min_x = 0, min_y = 0;
+    pixelRGB *pixel = NULL;
+    pixelRGB max_pixel, min_pixel;
+
+    for (int y = 0; y < hauteur; y++) {
+        for (int x = 0; x < largeur; x++) {
+            pixel = get_pixel(donnees, largeur, hauteur, nb_canaux, x, y);
+            if (!pixel) continue;
+
+            int somme = pixel->R + pixel->G + pixel->B;
+
+            if (somme > max_somme) {
+                max_somme = somme;
+                max_x = x;
+                max_y = y;
+                max_pixel = *pixel;
+            }
+
+            if (somme < min_somme) {
+                min_somme = somme;
+                min_x = x;
+                min_y = y;
+                min_pixel = *pixel;
+            }
+            free(pixel);
+        }
+    }
+    fprintf(fichier, "max_pixel (%d, %d): %d, %d, %d\n\n", max_x, max_y, max_pixel.R, max_pixel.G, max_pixel.B);
+    fprintf(fichier, "min_pixel (%d, %d): %d, %d, %d\n\n", min_x, min_y, min_pixel.R, min_pixel.G, min_pixel.B);
+
+    /*max_component/min_component*/
+    char comps[] = {'R', 'G', 'B'};
+    for (int c = 0; c < 3; c++) {
+        char comp = comps[c];
+        int max_val = -1, min_val = 256;
+        int max_cx = 0, max_cy = 0, min_cx = 0, min_cy = 0;
+
+        for (int y = 0; y < hauteur; y++) {
+            for (int x = 0; x < largeur; x++) {
+                pixel = get_pixel(donnees, largeur, hauteur, nb_canaux, x, y);
+                if (!pixel) continue;
+
+                int val = (comp == 'R') ? pixel->R : (comp == 'G') ? pixel->G : pixel->B;
+
+                if (val > max_val) {
+                    max_val = val;
+                    max_cx = x;
+                    max_cy = y;
+                }
+
+                if (val < min_val) {
+                    min_val = val;
+                    min_cx = x;
+                    min_cy = y;
+                }
+                free(pixel);
+            }
+        }
+        fprintf(fichier, "max_component %c (%d, %d): %d\n\n", comp, max_cx, max_cy, max_val);
+        fprintf(fichier, "min_component %c (%d, %d): %d\n\n", comp, min_cx, min_cy, min_val);
+    }
+    fclose(fichier);
+}
+
+/*feature 11 color_red*/
+void color_red (char *source_path)
+{
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int taille = largeur * hauteur * nb_canaux;
+    for (int i = 0; i < taille; i += nb_canaux){
+        donnees [i + 1] = 0;
+        donnees [i + 2] = 0;
+    }
+    write_image_data("image_out.bmp", donnees, largeur, hauteur);
+}
