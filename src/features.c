@@ -102,3 +102,41 @@ void print_pixel(char *source_path, int x, int y)
     }
 }
 
+/*feature 6 max_pixel*/
+void max_pixel(char *source_path) 
+{
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int max_somme = -1;
+    int max_x = 0;
+    int max_y = 0;
+    pixelRGB *max_pixel = NULL;
+
+    for (int y = 0; y < hauteur; y++) {
+        for (int x = 0; x < largeur; x++) {
+            pixelRGB *pixel = get_pixel(donnees, largeur, hauteur, nb_canaux, x, y);
+            if (pixel == NULL) continue;
+
+            int somme = pixel->R + pixel->G + pixel->B;
+            if (somme > max_somme) {
+                max_somme = somme;
+                max_x = x;
+                max_y = y;
+
+                if (max_pixel == NULL) {
+                    max_pixel = malloc(sizeof(pixelRGB));
+                }
+                *max_pixel = *pixel; 
+            }
+
+            free(pixel);
+        }
+    }
+
+    if (max_pixel != NULL) {
+        printf("max_pixel (%d, %d): %d, %d, %d\n", max_x, max_y, max_pixel->R, max_pixel->G, max_pixel->B);
+        free(max_pixel);
+    }
+}
