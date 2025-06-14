@@ -71,7 +71,16 @@ int main(int argc, char **argv) {
     } else {
         printf("Erreur : veuillez spécifier R, G ou B pour max_component\n");
     }
-}
+  }
+
+  if (strncmp(configuration.command, "min_component", 13) == 0) {
+    if (configuration.arguments[0] != NULL) {
+        char composante = configuration.arguments[0][0]; 
+        min_component(configuration.filenames[0], composante);
+    } else {
+        printf("Erreur : veuillez spécifier R, G ou B pour min_component\n");
+    }
+  }
 
   return 0;
 }

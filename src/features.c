@@ -210,3 +210,35 @@ void max_component(char *source_path, char composante)
     }
     printf("max_component %c (%d, %d): %d\n", composante, max_x, max_y, max_val);
 }
+
+/*feature 9 min_component*/
+void min_component(char *source_path, char composante)
+{
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+    read_image_data(source_path,&donnees,&largeur,&hauteur,&nb_canaux);
+
+    int min_val = 256;
+    int min_x = 0;
+    int min_y = 0;
+
+    for (int y = 0; y < hauteur; y++){
+        for (int x = 0; x < largeur; x++){
+            pixelRGB *pixel = get_pixel(donnees, largeur, hauteur, nb_canaux, x, y);
+            if (pixel == NULL) continue;
+
+            int val;
+            if (composante == 'R') val = pixel->R;
+            else if (composante == 'G') val = pixel->G;
+            else val = pixel->B;
+
+            if (val < min_val){
+                min_val = val;
+                min_x = x;
+                min_y = y;
+            } 
+            free (pixel);
+        }
+    }
+    printf("min_component %c (%d, %d): %d\n", composante, min_x, min_y, min_val);
+}
