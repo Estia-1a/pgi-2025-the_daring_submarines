@@ -83,7 +83,7 @@ void second_line(char *source_path)
 }
 
 /*feature 5 print_pixel*/
-void print_pixel( char *source_path, int x, int y )
+void print_pixel(char *source_path, int x, int y) 
 {
     unsigned char *donnees;
     int largeur;
@@ -91,10 +91,14 @@ void print_pixel( char *source_path, int x, int y )
     int nb_canaux;
 
     read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
-    
-    unsigned char R = donnees[(largeur*y+x)*nb_canaux];
-    unsigned char G = donnees[(largeur*y+x)*nb_canaux+1];
-    unsigned char B = donnees[(largeur*y+x)*nb_canaux+2];
 
-    printf("print_pixel: %d, %d, %d\n", R, G, B);
+    pixelRGB *pixel = get_pixel(donnees, largeur, hauteur, nb_canaux, x, y);
+
+    if (pixel == NULL) {
+        printf("Erreur : coordonnées (%d, %d) hors limites\n", x, y);
+    } else {
+        printf("Print Pixel (%d,%d): %d, %d, %d\n", x, y, pixel->R, pixel->G, pixel->B);
+        free(pixel);
+    }
 }
+
