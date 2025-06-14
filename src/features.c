@@ -576,3 +576,27 @@ void mirror_vertical (char *source_path) {
     write_image_data("image_out.bmp", nouvelle_image, largeur, hauteur);
     free(nouvelle_image);
 }
+
+/*feature 22 mirror_total*/
+void mirror_total (char *source_path) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int taille = hauteur * largeur * nb_canaux;
+    unsigned char *nouvelle_image = malloc (taille);
+
+    for (int y = 0; y < hauteur; y++){
+        for (int x = 0; x < largeur; x++){
+            int src_index = (y * largeur + x) * nb_canaux;
+            int dest_index = ((hauteur - 1 -y) * largeur + (largeur -1 -x)) * nb_canaux;
+
+            for (int c = 0; c < nb_canaux; c++){
+                nouvelle_image[dest_index + c] = donnees[src_index + c];
+            }
+        }
+    }
+    write_image_data("image_out.bmp", nouvelle_image, largeur, hauteur);
+    free(nouvelle_image);
+}
