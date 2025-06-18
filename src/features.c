@@ -601,4 +601,5 @@ void mirror_total (char *source_path) {
     free(nouvelle_image);
 }
 
-/*feature 23 scale_crop*/
+/*feature 23 scale_nearest*/
+
