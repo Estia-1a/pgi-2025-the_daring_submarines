@@ -602,4 +602,35 @@ void mirror_total (char *source_path) {
 }
 
 /*feature 23 scale_nearest*/
+void scale_nearest (char *source_path, float scale) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
 
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int new_largeur = (int)(largeur * scale);
+    int new_hauteur = (int)(hauteur * scale);
+
+    int taille = new_hauteur * new_largeur * nb_canaux;
+    unsigned char *nouvelle_image = malloc (taille);
+
+    for (int y_dst = 0; y_dst < new_hauteur; y_dst++) {
+        for (int x_dst = 0; x_dst < new_largeur; x_dst++) {
+            int x_src = (int)(x_dst / scale);
+            int y_src = (int)(y_dst / scale);
+ 
+            if (x_src >= largeur)  x_src = largeur - 1;
+            if (y_src >= hauteur) y_src = hauteur - 1;
+ 
+            int src_index = (y_src * largeur + x_src) * nb_canaux;
+            int dst_index = (y_dst * new_largeur + x_dst) * nb_canaux;
+ 
+            for (int c = 0; c < nb_canaux; c++) {
+                nouvelle_image[dst_index + c] = donnees[src_index + c];
+            }
+        }
+    }
+ 
+    write_image_data("image_out.bmp", nouvelle_image, new_largeur, new_hauteur);
+    free(nouvelle_image);
+}
