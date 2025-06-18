@@ -144,5 +144,13 @@ int main(int argc, char **argv) {
     scale_nearest(configuration.filenames[0], scale);
   }
 
+  if (strncmp(configuration.command, "scale_crop", 10) == 0) {
+    int center_x = atoi(configuration.arguments[0]);
+    int center_y = atoi(configuration.arguments[1]);
+    int largeur    = atoi(configuration.arguments[2]);
+    int hauteur   = atoi(configuration.arguments[3]);
+    scale_crop(configuration.filenames[0], center_x, center_y, largeur, hauteur);
+}
+
   return 0;
 }

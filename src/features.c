@@ -679,3 +679,35 @@ void scale_bilinear(char *source_path, float scale) {
     write_image_data("image_out.bmp", nouvelle_image, new_largeur, new_hauteur);
     free(nouvelle_image);
 }
+
+/*feature 25 scale_crop*/
+void scale_crop(char *source_path, int center_x, int center_y, int crop_largeur, int crop_hauteur) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+
+    int start_x = center_x - crop_largeur / 2;
+    int start_y = center_y - crop_hauteur / 2;
+
+    if (start_x < 0) start_x = 0;
+    if (start_y < 0) start_y = 0;
+    if (start_x + crop_largeur > largeur) start_x = largeur - crop_largeur;
+    if (start_y + crop_hauteur > hauteur) start_y = hauteur - crop_hauteur;
+
+    unsigned char *crop_donnees = malloc(crop_largeur * crop_hauteur * nb_canaux);
+
+    for (int y = 0; y < crop_hauteur; y++) {
+        for (int x = 0; x < crop_largeur; x++) {
+            int src_index = ((start_y + y) * largeur + (start_x + x)) * nb_canaux;
+            int dst_index = (y * crop_largeur + x) * nb_canaux;
+
+            for (int c = 0; c < nb_canaux; c++) {
+                crop_donnees[dst_index + c] = donnees[src_index + c];
+            }
+        }
+    }
+
+    write_image_data("image_out.bmp", crop_donnees, crop_largeur, crop_hauteur);
+    free(crop_donnees);
+}
