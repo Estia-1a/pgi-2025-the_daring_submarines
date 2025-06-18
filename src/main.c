@@ -134,7 +134,10 @@ int main(int argc, char **argv) {
     mirror_total(configuration.filenames[0]);
   }
 
-  
+  if (strncmp(configuration.command, "scale_nearest", 13) == 0) {
+    float scale = atof(configuration.arguments[0]);
+    scale_nearest(configuration.filenames[0], scale);
+  }
 
   return 0;
 }
