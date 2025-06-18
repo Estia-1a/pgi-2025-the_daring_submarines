@@ -50,4 +50,6 @@ void mirror_total(char *source_path);
 
 void scale_nearest(char *source_path, float scale);
 
+void scale_bilinear(char *source_path, float scale);
+
 #endif

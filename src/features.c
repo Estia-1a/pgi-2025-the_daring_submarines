@@ -634,3 +634,48 @@ void scale_nearest (char *source_path, float scale) {
     write_image_data("image_out.bmp", nouvelle_image, new_largeur, new_hauteur);
     free(nouvelle_image);
 }
+
+/*feature 24 scale_bilinear*/
+void scale_bilinear(char *source_path, float scale) {
+    unsigned char *donnees;
+    int largeur, hauteur, nb_canaux;
+ 
+    read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
+ 
+    int new_largeur = (int)(largeur * scale);
+    int new_hauteur = (int)(hauteur * scale);
+ 
+    unsigned char *nouvelle_image = malloc(new_largeur * new_hauteur * nb_canaux);
+ 
+    for (int y_dst = 0; y_dst < new_hauteur; y_dst++) {
+        for (int x_dst = 0; x_dst < new_largeur; x_dst++) {
+            float x_src = x_dst / scale;
+            float y_src = y_dst / scale;
+ 
+            int x = (int)x_src;
+            int y = (int)y_src;
+ 
+            float dx = x_src - x;
+            float dy = y_src - y;
+ 
+            if (x >= largeur - 1) x = largeur - 2;
+            if (y >= hauteur - 1) y = hauteur - 2;
+ 
+            for (int c = 0; c < nb_canaux; c++) {
+                int Q11 = donnees[(y * largeur + x) * nb_canaux + c];
+                int Q12 = donnees[(y * largeur + (x + 1)) * nb_canaux + c];
+                int Q21 = donnees[((y + 1) * largeur + x) * nb_canaux + c];
+                int Q22 = donnees[((y + 1) * largeur + (x + 1)) * nb_canaux + c];
+ 
+                float P1 = Q11 * (1 - dx) + Q12 * dx;
+                float P2 = Q21 * (1 - dx) + Q22 * dx;
+                float P  = P1 * (1 - dy) + P2 * dy;
+ 
+                nouvelle_image[(y_dst * new_largeur + x_dst) * nb_canaux + c] = (unsigned char)P;
+            }
+        }
+    }
+ 
+    write_image_data("image_out.bmp", nouvelle_image, new_largeur, new_hauteur);
+    free(nouvelle_image);
+}
