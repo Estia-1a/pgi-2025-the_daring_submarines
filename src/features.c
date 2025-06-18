@@ -516,7 +516,7 @@ void rotate_acw (char *source_path) {
             int src_index = (y * largeur + x) * nb_canaux;
 
             int x_new = y;
-            int y_new = hauteur - 1 - x;
+            int y_new = new_hauteur - 1 - x;
 
             int dest_index = (y_new * new_largeur + x_new) * nb_canaux;
 
