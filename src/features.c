@@ -709,5 +709,5 @@ void scale_crop(char *source_path, int center_x, int center_y, int crop_largeur,
     }
 
     write_image_data("image_out.bmp", crop_donnees, crop_largeur, crop_hauteur);
-    free(crop_donnees);
+    free(crop_donnees); 
 }
