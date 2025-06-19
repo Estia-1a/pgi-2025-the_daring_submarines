@@ -690,24 +690,28 @@ void scale_crop(char *source_path, int center_x, int center_y, int crop_largeur,
     int start_x = center_x - crop_largeur / 2;
     int start_y = center_y - crop_hauteur / 2;
 
-    if (start_x < 0) start_x = 0;
-    if (start_y < 0) start_y = 0;
-    if (start_x + crop_largeur > largeur) start_x = largeur - crop_largeur;
-    if (start_y + crop_hauteur > hauteur) start_y = hauteur - crop_hauteur;
-
     unsigned char *crop_donnees = malloc(crop_largeur * crop_hauteur * nb_canaux);
 
     for (int y = 0; y < crop_hauteur; y++) {
         for (int x = 0; x < crop_largeur; x++) {
-            int src_index = ((start_y + y) * largeur + (start_x + x)) * nb_canaux;
-            int dst_index = (y * crop_largeur + x) * nb_canaux;
+            int src_x = start_x + x;
+            int src_y = start_y + y;
 
-            for (int c = 0; c < nb_canaux; c++) {
-                crop_donnees[dst_index + c] = donnees[src_index + c];
+            int dest_index = (y * crop_largeur + x) * nb_canaux;
+
+            if (src_x >= 0 && src_x < largeur && src_y >= 0 && src_y < hauteur) {
+                int src_index = (src_y * largeur + src_x) * nb_canaux;
+                for (int c = 0; c < nb_canaux; c++) {
+                    crop_donnees[dest_index + c] = donnees[src_index + c];
+                }
+            } else {
+                for (int c = 0; c < nb_canaux; c++) {
+                    crop_donnees[dest_index + c] = 0;
+                }
             }
         }
     }
 
     write_image_data("image_out.bmp", crop_donnees, crop_largeur, crop_hauteur);
-    free(crop_donnees); 
+    free(crop_donnees);
 }
