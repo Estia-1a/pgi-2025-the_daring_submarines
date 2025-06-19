@@ -687,8 +687,8 @@ void scale_crop(char *source_path, int center_x, int center_y, int crop_largeur,
 
     read_image_data(source_path, &donnees, &largeur, &hauteur, &nb_canaux);
 
-    int start_x = center_x - crop_largeur / 2;
-    int start_y = center_y - crop_hauteur / 2;
+    int start_x = center_x - (crop_largeur - 1) / 2;
+    int start_y = center_y - (crop_hauteur - 1) / 2;
 
     unsigned char *crop_donnees = malloc(crop_largeur * crop_hauteur * nb_canaux);
 
